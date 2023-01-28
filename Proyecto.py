@@ -54,7 +54,7 @@ st.image(image, width=100, use_column_width=True)
 
 # Insert video
 st.subheader("*Basic Fundamentals of Well Log Interpretation*")
-video = open("Resources/#Petrofísica 101. Fundamentos básicos.mp4", "rb")
+video = open("Resources/Petrofísica 101. Fundamentos básicos.mp4", "rb")
 st.video(video)
 st.caption("Video about Well Log Interpretation")
 
