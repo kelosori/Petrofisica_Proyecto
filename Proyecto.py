@@ -75,3 +75,4 @@ with st.sidebar:
         menu_title="Menu",
         options=["Home", "Data", "Records"],
         icons=["house", "sim", "graph-up"],)
+
