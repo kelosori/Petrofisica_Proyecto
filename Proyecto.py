@@ -11,7 +11,7 @@ from collections import namedtuple
 
 
 # Insert an icon
-icon = Image.open("Resources/inflow.png")
+icon = Image.open("Resources/petrofisica3.jpg")
 
 # State the design of the app
 st.set_page_config(page_title="Petrophysics", page_icon=icon)
