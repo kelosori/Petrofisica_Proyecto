@@ -10,7 +10,7 @@ from PIL import Image
 from collections import namedtuple
 from io import StringIO
 import warnings
-import lasio
+#import lasio
 from pathlib import Path
 from utilities1 import dataframe,plot_null_data, curvas_logs, multi_well,read_data
 import welly
@@ -121,6 +121,6 @@ elif options == "Logs Visualizations":
         stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
         datas = read_data(stringio)
         Curves = ["KLOGH", "PHIF", "SAND_FLAG", "SW", 'VSH']
-        for data in datas:
-            fig = curvas_logs(Curves,data,3350,3450)
-            st.pyplot(fig)
+        #for data in datas:
+        #    fig = curvas_logs(Curves,data,3350,3450)
+        #    st.pyplot(fig)

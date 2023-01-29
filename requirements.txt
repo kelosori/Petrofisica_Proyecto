@@ -4,3 +4,5 @@ streamlit-option-menu==0.3.2
 pandas==1.5.2
 pillow==9.4.0
 matplotlib==3.6.3
+lasio==0.30
+welly==0.5.2
