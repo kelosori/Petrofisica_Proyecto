@@ -11,6 +11,12 @@ from collections import namedtuple
 from io import StringIO
 import warnings
 import lasio
+from pathlib import Path
+from utilities1 import dataframe,plot_null_data, curvas_logs, multi_well,read_data
+import welly
+#import missingno as msno
+
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Insert an icon
 icon = Image.open("Resources/petrofisica3.jpg")
@@ -85,7 +91,25 @@ if options == "Data Information":
 
     if files is not None:
         stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
-        well_logs = [st.write(lasio.read(log).df()) for log in stringio]
+        datas = dataframe(stringio)
+        if st.checkbox("Uploaded file dataframes"):
+            st.subheader("Uploaded file dataframes")
+            for data in datas:
+                st.write(data)
+
+        elif st.checkbox("Statistical summary of uploaded files"):
+            st.subheader("Statistical summary of uploaded files")
+            for data in datas:
+                st.write(data.describe())
+
+        elif st.checkbox("Show charts on null data"):
+            st.subheader("Show charts on null data")
+            for data in datas:
+                st.write(data.isnull().sum())
+                fig = plot_null_data(data)
+                st.pyplot(fig)
+
+
 
 elif options == "Logs Visualizations":
     n_wells = int(st.number_input("Enter the well logs files"))
@@ -95,4 +119,8 @@ elif options == "Logs Visualizations":
 
     if files is not None:
         stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
-        data_las = [st.write(lasio.read(log).df()) for log in stringio]
+        datas = read_data(stringio)
+        Curves = ["KLOGH", "PHIF", "SAND_FLAG", "SW", 'VSH']
+        for data in datas:
+            fig = curvas_logs(Curves,data,3350,3450)
+            st.pyplot(fig)
