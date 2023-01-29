@@ -14,6 +14,8 @@ import lasio
 from pathlib import Path
 from utilities1 import dataframe,plot_null_data, curvas_logs, multi_well,read_data,temp_1
 import welly
+import warnings
+warnings.filterwarnings("ignore")
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
