@@ -13,7 +13,6 @@ import warnings
 import lasio
 from pathlib import Path
 import welly
-import missingno as msno
 
 archivo1 = Path("Data/VOLVE-PETROPHYSICAL_INTERPRETATION/15_9-F-1 A/WLC_PETRO_COMPUTED_OUTPUT_1.LAS")
 archivo2 = Path("Data/VOLVE-PETROPHYSICAL_INTERPRETATION/15_9-F-1 B/WLC_PETRO_COMPUTED_OUTPUT_1.LAS")
