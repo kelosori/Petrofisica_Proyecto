@@ -12,7 +12,7 @@ from io import StringIO
 import warnings
 import lasio
 from pathlib import Path
-from utilities1 import dataframe,plot_null_data, curvas_logs, multi_well,read_data
+from utilities1 import dataframe,plot_null_data, curvas_logs, multi_well,read_data,temp_1
 import welly
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -77,8 +77,8 @@ st.sidebar.title(":arrow_down: *Navigation*")
 with st.sidebar:
     options = option_menu(
         menu_title="Menu",
-        options=["Home", "Data Information", "Logs Visualizations"],
-        icons=["house", "sim", "graph-up"],)
+        options=["Home", "Data Information", "Logs Visualizations","Petrophysical Calculations"],
+        icons=["house", "sim", "graph-up","calculator"],)
 
 # Options
 if options == "Data Information":
@@ -116,10 +116,22 @@ elif options == "Logs Visualizations":
         st.file_uploader(f"Upload the las file of well {n + 1}") for n in range(n_wells)
     ]
 
-    if files is not None:
-        stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
-        datas = read_data(stringio)
-        Curves = ["KLOGH", "PHIF", "SAND_FLAG", "SW", 'VSH']
-        #for data in datas:
-        #    fig = curvas_logs(Curves,data,3350,3450)
-        #    st.pyplot(fig)
+    data_logs = {}
+    names_w = []
+    for i in range(n_wells):
+        well = st.text_input(f"Enter name of {i} Well")
+        if files is not None:
+            stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
+            datas = dataframe(stringio)
+            names_w.append(well)
+            data_logs[names_w[i]] = datas[i]
+    if st.checkbox("Well Logs"):
+        fig = multi_well((12, 10), data_logs, temp_1)
+        st.pyplot(fig)
+
+elif options == "Petrophysical Calculations":
+    n_wells = int(st.number_input("Enter the well logs files"))
+    files = [
+        st.file_uploader(f"Upload the las file of well {n + 1}") for n in range(n_wells)
+    ]
+
