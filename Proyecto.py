@@ -10,11 +10,10 @@ from PIL import Image
 from collections import namedtuple
 from io import StringIO
 import warnings
-#import lasio
+import lasio
 from pathlib import Path
 from utilities1 import dataframe,plot_null_data, curvas_logs, multi_well,read_data
 import welly
-#import missingno as msno
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
