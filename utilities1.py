@@ -85,4 +85,3 @@ def multi_well(figsize, data, template):
     for idx, (well_name, df) in enumerate(data.items()):
         template(subfigs[idx], df, "KLOGH", "PHIF", "SW")
         subfigs[idx].suptitle(well_name)
-

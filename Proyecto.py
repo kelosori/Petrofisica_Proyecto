@@ -134,4 +134,13 @@ elif options == "Petrophysical Calculations":
     files = [
         st.file_uploader(f"Upload the las file of well {n + 1}") for n in range(n_wells)
     ]
+    if files is not None:
+        stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
+        datas = dataframe(stringio)
+        st.subheader("Calculation of Porosity and Volume of clay")
+        for data in datas:
+            if st.checkbox("V-Shale"):
+                data['VSH'] = (data['GR'].max() - data['GR']) / (data['GR'].max() - data['GR'].min())
+                st.write(data.head())
+
 
