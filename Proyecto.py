@@ -8,7 +8,9 @@ from scipy import stats
 from streamlit_option_menu import option_menu
 from PIL import Image
 from collections import namedtuple
-
+from io import StringIO
+import warnings
+import lasio
 
 # Insert an icon
 icon = Image.open("Resources/petrofisica3.jpg")
@@ -66,13 +68,34 @@ st.sidebar.image(Logo)
 # Add title to the sidebar section
 st.sidebar.title(":arrow_down: *Navigation*")
 
-# Upload files
-upload_file = st.sidebar.file_uploader("Upload your LAS file")
-
 # Pages
 with st.sidebar:
     options = option_menu(
         menu_title="Menu",
-        options=["Home", "Data", "Records"],
+        options=["Home", "Data Information", "Logs Visualizations"],
         icons=["house", "sim", "graph-up"],)
 
+# Options
+if options == "Data Information":
+    # number of file to upload
+    n_wells = int(st.number_input("Enter the well logs files"))
+    files = [
+        st.file_uploader(f"Upload the las file of well {n + 1}") for n in range(n_wells)
+    ]
+
+    if files is not None:
+        stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
+        well_logs = [st.write(lasio.read(log).df()) for log in stringio]
+
+
+
+
+elif options == "Logs Visualizations":
+    n_wells = int(st.number_input("Enter the well logs files"))
+    files = [
+        st.file_uploader(f"Upload the las file of well {n + 1}") for n in range(n_wells)
+    ]
+
+    if files is not None:
+        stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
+        data_las = [st.write(lasio.read(log).df()) for log in stringio]
