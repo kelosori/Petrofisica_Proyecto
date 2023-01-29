@@ -11,6 +11,9 @@ from collections import namedtuple
 from io import StringIO
 import warnings
 import lasio
+from pathlib import Path
+from utilities1 import dataframe
+import welly
 
 # Insert an icon
 icon = Image.open("Resources/petrofisica3.jpg")
@@ -82,12 +85,23 @@ if options == "Data Information":
     files = [
         st.file_uploader(f"Upload the las file of well {n + 1}") for n in range(n_wells)
     ]
-
     if files is not None:
         stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
-        well_logs = [st.write(lasio.read(log).df()) for log in stringio]
+        var = dataframe(stringio)
+        if st.checkbox("Uploaded file dataframes"):
+            st.subheader("Uploaded file dataframes")
+            for data in var:
+                st.write(data)
 
+        elif st.checkbox("Statistical summary of uploaded files"):
+            st.subheader("Statistical summary of uploaded files")
+            for data in var:
+                st.write(data.describe())
 
+        elif st.checkbox("Show charts on null data"):
+            st.subheader("Show charts on null data")
+            for data in var:
+                st.write(data.insa().sum())
 
 
 elif options == "Logs Visualizations":
@@ -98,4 +112,8 @@ elif options == "Logs Visualizations":
 
     if files is not None:
         stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
-        data_las = [st.write(lasio.read(log).df()) for log in stringio]
+        las_data = [lasio.read(data) for data in stringio]
+        well_logs = [log.df() for log in las_data]
+        logs = {f"{data.well.keys()}": df for data in las_data for df in well_logs}
+
+
