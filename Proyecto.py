@@ -139,10 +139,19 @@ elif options == "Petrophysical Calculations":
     if files is not None:
         stringio = [StringIO(log.getvalue().decode("utf-8")) for log in files]
         datas = dataframe(stringio)
-        st.subheader("Calculation of Porosity and Volume of clay")
+        st.subheader("Calculations")
         for data in datas:
-            if st.checkbox("V-Shale"):
-                data['VSH'] = (data['GR'].max() - data['GR']) / (data['GR'].max() - data['GR'].min())
-                st.write(data.head())
+            data = data.fillna(0)
+            poro = []
+            data['VSH'] = (data['GR'].max() - data['GR']) / (data['GR'].max() - data['GR'].min())
+            data.reset_index(inplace=True)
+            data = data.fillna(0)
+            poro = []
+            for i in data["RHOB"]:
+                phi = abs((2.65 - i) / (2.65 - 1))
+                poro.append(phi)
+
+            data["PHIF"] = poro
+            st.write(data.head())
 
 

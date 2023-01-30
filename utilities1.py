@@ -14,12 +14,7 @@ import lasio
 from pathlib import Path
 import welly
 
-archivo1 = Path("Data/VOLVE-PETROPHYSICAL_INTERPRETATION/15_9-F-1 A/WLC_PETRO_COMPUTED_OUTPUT_1.LAS")
-archivo2 = Path("Data/VOLVE-PETROPHYSICAL_INTERPRETATION/15_9-F-1 B/WLC_PETRO_COMPUTED_OUTPUT_1.LAS")
-archivo3 = Path("Data/VOLVE-PETROPHYSICAL_INTERPRETATION/15_9-F-1 C/WLC_PETRO_COMPUTED_OUTPUT_1.LAS")
 
-files = [archivo1,archivo2,archivo3]
-#data = []
 def dataframe(files):
     data = []
     for i in files:
